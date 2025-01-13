@@ -21,7 +21,7 @@ channel.QueueDeclare(queue: "example-queue", exclusive: false, durable: true); /
 
 EventingBasicConsumer consumer = new(channel);
 channel.BasicConsume(queue: "example-queue",autoAck:false, consumer);
-
+channel.BasicQos(0, 1, false);  // false dersek sadece bu consumer için gerekli çalışmayı yapar
 consumer.Received += (sender, e) =>
 {
     //Kuyruğa gelen mesajın işlendiği yerdir
