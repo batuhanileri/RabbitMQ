@@ -14,7 +14,7 @@ using IModel channel = connection.CreateModel();
 
 
 //Queue oluşturma
-channel.QueueDeclare(queue: "example-queue", exclusive: false); //Consumerdaki kuyruk publisher ile
+channel.QueueDeclare(queue: "example-queue", exclusive: false, durable: true); //Consumerdaki kuyruk publisher ile
                                                                 //birebir aynı yapılandırmada tanımlanmalıdır
 
 //Queue'den Mesaj okuma
