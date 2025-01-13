@@ -4,7 +4,7 @@ using System.Text;
 // Bağlantı oluşturma
 ConnectionFactory factory = new()
 {
-    Uri = new Uri("ampq.com")
+    Uri = new Uri("amqps")
 };
 
 // Bağlantıyı aktifleştirme ve kanal açma
@@ -18,7 +18,12 @@ channel.QueueDeclare(queue: "example-queue",exclusive:false);
 
 //RabbitMQ kuyruğa atacağı mesajları byte türünden kabul etmektedir. Haliyle mesajları byte dönüştürmemiz gerekmektedir.
 
-byte[] message = Encoding.UTF8.GetBytes("Merhaba");
-channel.BasicPublish(exchange:"", routingKey: "example-queue", body: message);
+for (int i = 0; i < 100; i++)
+{
+    byte[] message = Encoding.UTF8.GetBytes("Merhaba" + i);
+    channel.BasicPublish(exchange: "", routingKey: "example-queue", body: message);
+
+}
+
 
 Console.Read();
