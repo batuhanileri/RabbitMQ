@@ -4,7 +4,7 @@ using System.Text;
 // Bağlantı oluşturma
 ConnectionFactory factory = new()
 {
-    Uri = new Uri("amqps")
+    Uri = new Uri("amqps://rbqcvqzw:TDmVtIYjrYvoGNwdhavdhgFXOHxZ_Crr@woodpecker.rmq.cloudamqp.com/rbqcvqzw")
 };
 
 // Bağlantıyı aktifleştirme ve kanal açma

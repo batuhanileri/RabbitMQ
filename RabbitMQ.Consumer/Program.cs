@@ -5,7 +5,7 @@ using System.Text;
 
 ConnectionFactory connectionFactory = new();
 
-connectionFactory.Uri = new("amqps");
+connectionFactory.Uri = new("amqps://rbqcvqzw:TDmVtIYjrYvoGNwdhavdhgFXOHxZ_Crr@woodpecker.rmq.cloudamqp.com/rbqcvqzw");
 
 //Bağlantıyı aktifleştirme ve kanal açma
 
@@ -20,7 +20,7 @@ channel.QueueDeclare(queue: "example-queue", exclusive: false); //Consumerdaki k
 //Queue'den Mesaj okuma
 
 EventingBasicConsumer consumer = new(channel);
-channel.BasicConsume(queue: "example-queue", false, consumer);
+channel.BasicConsume(queue: "example-queue",autoAck:false, consumer);
 
 consumer.Received += (sender, e) =>
 {
@@ -28,6 +28,9 @@ consumer.Received += (sender, e) =>
     //e.Body : Kuyruktaki mesajın verisini getirecektir.
     //e.Body.Span veya e.Body.ToArray() : Kuyruktaki mesajın byte verisini getirecektir.
     Console.WriteLine(Encoding.UTF8.GetString(e.Body.Span));
+
+    channel.BasicAck(deliveryTag: e.DeliveryTag, multiple: false); // multiple: false sadece gelen mesaja dair silme işlemini yapcaktır. Silmeyi consumera bırakacaktır.
+                                                                   // eğer true dersek kuyruktaki tüm hepsini silecektir.
 };
 
 Console.Read();
